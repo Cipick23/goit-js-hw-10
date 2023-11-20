@@ -9,27 +9,32 @@
   <body>
     
     <select 
-      class="breed-select"
-      onchange="fetchBreeds(this.value)"
-      >
+    class="breed-select" 
+    onchange="fetchCatInfo(breedId)"
+    >
     </select>
 
-    <span class="loader">
-      Loading data, please wait...
-    </span>
-
-    <p 
-      class="error"
-      >
-      Oops! Something went wrong! Try reloading the page!
-    </p>
-    
-    <div 
-      class="cat-info"
-      >
+    <div id="loader" class="hidden">
+        <div 
+          class="loading-spinner"
+          >
+        </div>
+        <p>Loading data, please wait...</p>
     </div>
 
-    <!-- <script src="cat-api.js" type="module"></script> -->
-    <script src="index.js" type="module"></script>
+    <p class="error">
+        Oops! Something went wrong! Try reloading the page!
+    </p>
+    
+    <div class="cat-info">
+      <div class="section-img"></div>
+      <div class="section-decription"></div>
+    </div>
+
+    <script 
+      src="index.js" 
+      type="module"
+      >
+    </script>
   </body>
 </html>

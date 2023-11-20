@@ -1,57 +1,88 @@
-import API from './cat-api.js';
 import axios from "axios";
+import SlimSelect from 'slim-select'
+import { CatApi } from './cat-api.js';
 
 const breedSelect = document.querySelector('.breed-select');
-const loader = document.querySelector('.loader');
-const errorMessage = document.querySelector('.error');
-const catInfo = document.querySelector('.cat-info');
+const loader = document.getElementById('loader');
+const errorParagraph = document.querySelector('.error');
+const catInfoContainer = document.querySelector('.cat-info');
 
-breedSelect.addEventListener('click', fetchBreeds(API)); // Schimba 'click' cu 'change'
+// let storedBreeds = [];
 
-async function fetchBreeds(value) {
-    const selectedBreed = document.querySelector('.breed-select');
-    const defaultOption = document.createElement('option');
-    defaultOption.value = '';
-    defaultOption.textContent = 'Abyssinian';
-    breedSelect.appendChild(defaultOption);
-
-    // Afișează loader în timp ce se încarcă datele
-    // breedSelect.display = 'none'
-    // loader.style.display = 'block';
-    // errorMessage.style.display = 'none';
-    // catInfo.innerHTML = ''; // Golește conținutul anterior
-
-    try {
-        const data = await API.fetchBreeds(value);
-        
-        // Ascunde loader după ce datele sunt încărcate cu succes
-        loader.style.display = 'none';
-
-        // Afiseaza informatiile despre pisica
-       
-    } catch (error) {
-        // Afișează un mesaj de eroare în caz de eșec
-        loader.style.display = 'none';
-        errorMessage.style.display = 'block';
-        console.error('Oops! Something went wrong! Try reloading the page!', error.message);
-    }
+function showLoader() {
+    loader.classList.remove('hidden');
 }
 
-// function renderCatInfo(data) {
-//     // Implementează logica pentru afișarea datelor în elementul catInfo
-//     // (de exemplu, poți construi un markup HTML din datele primite și să-l adaugi în catInfo.innerHTML)
-//     const { name, description, temperament, urlToImage } = e;
-//     catInfo.innerHTML = `
-//     <div class="cat-info">
-//             <img src='${urlToImage}' class="cat-image">
-//             <h2 class="cat-name">${name}</h2>
-//             <p class="cat-description">${description}</p>
-//             <p class="cat-temperament">${temperament}</p>
-//         </div>
-//     `;
-// }
+function hideLoader() {
+    loader.classList.add('hidden');
+}
 
-// function updateBreedInfo(markup) {
-//     document.querySelector('cat-info').innerHTML = markup;
-// }
- 
+function showError() {
+    errorParagraph.style.display = 'Oops! Something went wrong! Try reloading the page!';
+}
+
+function hideError() {
+    errorParagraph.style.display = 'Oops! Something went wrong! Try reloading the page!';
+}
+
+function displayBreedsInSelector() {
+    breedSelect.innerHTML = '<option value="">Abyssinian</option>';
+    storedBreeds.forEach(breed => {
+        const option = document.createElement('option');
+        option.value = breed.id;
+        option.innerHTML = breed.name;
+        breedSelect.appendChild(option);
+    });
+}
+
+function renderCatInfo(catInfo) {
+    catInfoContainer.innerHTML = `
+    <div><img src="${catInfo.url}" alt="${catInfo.breeds[0].name}"></div>
+    <div><p>Name: ${catInfo.breeds[0].name}</p>
+    <p>Description: ${catInfo.breeds[0].description}</p>
+    <p>Temperament: ${catInfo.breeds[0].temperament}</p></div>
+    `;
+}
+
+function fetchBreeds() {
+    showLoader();
+    hideError();
+
+    CatApi.fetchBreeds()
+        .then(breeds => {
+            storedBreeds = breeds;
+            displayBreedsInSelector();
+        })
+        .catch(error => {
+            console.error(error);
+            showError(console.error('Oops! Something went wrong! Try reloading the page!'));
+        })
+        .finally(() => hideLoader());
+}
+
+function fetchCatInfo(breedId) {
+    setTimeout(() => {
+        showLoader();
+        hideError();
+
+    CatApi.fetchCatByBreed(breedId)
+        .then(catInfo => {
+            renderCatInfo(catInfo[0]);
+        })
+        .catch(error => {
+            console.error(error);
+            showError(console.error('Oops! Something went wrong! Try reloading the page!'));
+        })
+        .finally(() => hideLoader());
+        
+    }, 1000)
+}
+
+// Event listener pentru schimbarea selecției în breedSelect
+breedSelect.addEventListener('change', function () {
+    const selectedBreedId = breedSelect.value;
+    fetchCatInfo(selectedBreedId);
+});
+
+// Cerere inițială pentru a obține lista de rase de pisici
+fetchBreeds();
