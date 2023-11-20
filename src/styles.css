@@ -25,12 +25,8 @@ body {
   display: flex;
   flex-direction: row;
   gap: 15px;
-}
-
-.hidden > p {
-  display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
 }
 
   .error {

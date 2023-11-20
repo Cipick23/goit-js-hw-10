@@ -10,7 +10,7 @@
     
     <select 
     class="breed-select" 
-    onchange="fetchCatInfo(breedId)"
+    onchange="fetchCatInfo(this.value)"
     >
     </select>
 
@@ -19,7 +19,7 @@
           class="loading-spinner"
           >
         </div>
-        <p>Loading data, please wait...</p>
+        Loading data, please wait...
     </div>
 
     <p class="error">
@@ -32,7 +32,7 @@
     </div>
 
     <script 
-      src="index.js" 
+      src="./index.js" 
       type="module"
       >
     </script>

@@ -1,13 +1,15 @@
-import axios from "axios";
-import SlimSelect from 'slim-select'
 import { CatApi } from './cat-api.js';
+import axios from "axios";
+import SlimSelect from 'slim-select';
+import Notiflix from 'notiflix';
+
 
 const breedSelect = document.querySelector('.breed-select');
 const loader = document.getElementById('loader');
 const errorParagraph = document.querySelector('.error');
 const catInfoContainer = document.querySelector('.cat-info');
 
-// let storedBreeds = [];
+let storedBreeds = [];
 
 function showLoader() {
     loader.classList.remove('hidden');
@@ -18,11 +20,12 @@ function hideLoader() {
 }
 
 function showError() {
-    errorParagraph.style.display = 'Oops! Something went wrong! Try reloading the page!';
+    errorParagraph.style.display = 'block';
+    errorParagraph.innerHTML = 'Oops! Something went wrong! Try reloading the page!';
 }
 
 function hideError() {
-    errorParagraph.style.display = 'Oops! Something went wrong! Try reloading the page!';
+    errorParagraph.style.display = 'none';
 }
 
 function displayBreedsInSelector() {
@@ -54,28 +57,23 @@ function fetchBreeds() {
             displayBreedsInSelector();
         })
         .catch(error => {
-            console.error(error);
-            showError(console.error('Oops! Something went wrong! Try reloading the page!'));
+            showError();
         })
         .finally(() => hideLoader());
 }
 
 function fetchCatInfo(breedId) {
-    setTimeout(() => {
-        showLoader();
-        hideError();
+    showLoader();
+    hideError();
 
     CatApi.fetchCatByBreed(breedId)
         .then(catInfo => {
             renderCatInfo(catInfo[0]);
         })
         .catch(error => {
-            console.error(error);
-            showError(console.error('Oops! Something went wrong! Try reloading the page!'));
+            showError();
         })
         .finally(() => hideLoader());
-        
-    }, 1000)
 }
 
 // Event listener pentru schimbarea selecției în breedSelect
