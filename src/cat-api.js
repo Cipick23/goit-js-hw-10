@@ -1,3 +1,5 @@
+// cat-api.js
+
 const CatApi = {
     url: "https://api.thecatapi.com/v1",
     apiKey: "live_aOIYhgyqCw9ZFXBbhPIXGxyWuikffXYH7HXlX7deKSKNH9tpn2JJ0aYEdQi8K65r",

@@ -1,15 +1,15 @@
-import { CatApi } from './cat-api.js';
 import axios from "axios";
 import SlimSelect from 'slim-select';
-import Notiflix from 'notiflix';
-
+import Notiflix from 'notiflix';import { CatApi } from './cat-api.js';
 
 const breedSelect = document.querySelector('.breed-select');
 const loader = document.getElementById('loader');
 const errorParagraph = document.querySelector('.error');
 const catInfoContainer = document.querySelector('.cat-info');
-
 let storedBreeds = [];
+
+hideError();
+hideLoader();
 
 function showLoader() {
     loader.classList.remove('hidden');
@@ -28,23 +28,14 @@ function hideError() {
     errorParagraph.style.display = 'none';
 }
 
-function displayBreedsInSelector() {
-    breedSelect.innerHTML = '<option value="">Abyssinian</option>';
-    storedBreeds.forEach(breed => {
+function displayBreedsInSelector(breeds) {
+    breedSelect.innerHTML = '';
+    breeds.forEach(breed => {
         const option = document.createElement('option');
         option.value = breed.id;
         option.innerHTML = breed.name;
         breedSelect.appendChild(option);
     });
-}
-
-function renderCatInfo(catInfo) {
-    catInfoContainer.innerHTML = `
-    <div><img src="${catInfo.url}" alt="${catInfo.breeds[0].name}"></div>
-    <div><p>Name: ${catInfo.breeds[0].name}</p>
-    <p>Description: ${catInfo.breeds[0].description}</p>
-    <p>Temperament: ${catInfo.breeds[0].temperament}</p></div>
-    `;
 }
 
 function fetchBreeds() {
@@ -54,17 +45,33 @@ function fetchBreeds() {
     CatApi.fetchBreeds()
         .then(breeds => {
             storedBreeds = breeds;
-            displayBreedsInSelector();
+            displayBreedsInSelector(storedBreeds);
         })
         .catch(error => {
             showError();
         })
-        .finally(() => hideLoader());
+        .finally(() => {
+            hideLoader();
+        });
+}
+
+
+function renderCatInfo(catInfo) {
+    catInfoContainer.innerHTML = `
+        <div><img src="${catInfo.url}" alt="${catInfo.breeds[0].name}"></div>
+        <div>
+            <p>Name: ${catInfo.breeds[0].name}</p>
+            <p>Description: ${catInfo.breeds[0].description}</p>
+            <p>Temperament: ${catInfo.breeds[0].temperament}</p>
+        </div>
+    `;
 }
 
 function fetchCatInfo(breedId) {
     showLoader();
-    hideError();
+
+    // Ascunde breedSelect în timpul cererii pentru informații despre pisică
+    breedSelect.classList.add('hidden');
 
     CatApi.fetchCatByBreed(breedId)
         .then(catInfo => {
@@ -73,7 +80,10 @@ function fetchCatInfo(breedId) {
         .catch(error => {
             showError();
         })
-        .finally(() => hideLoader());
+        .finally(() => {
+            hideLoader(); // Ascunde loader după finalizarea cererii
+            breedSelect.classList.remove('hidden'); // Afișează breedSelect după finalizarea cererii
+        });
 }
 
 // Event listener pentru schimbarea selecției în breedSelect
