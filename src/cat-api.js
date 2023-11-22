@@ -1,17 +1,28 @@
-// cat-api.js
+import axios from "axios";
+
+const apiKey = "live_aOIYhgyqCw9ZFXBbhPIXGxyWuikffXYH7HXlX7deKSKNH9tpn2JJ0aYEdQi8K65r"; // Înlocuiește "cheia ta" cu cheia ta API
+
+axios.defaults.headers.common["x-api-key"] = apiKey;
 
 const CatApi = {
     url: "https://api.thecatapi.com/v1",
-    apiKey: "live_aOIYhgyqCw9ZFXBbhPIXGxyWuikffXYH7HXlX7deKSKNH9tpn2JJ0aYEdQi8K65r",
 
-    fetchBreeds: function () {
-        return fetch(`${this.url}/breeds`, { headers: { 'X-Api-Key': this.apiKey } })
-            .then(response => response.json());
+    fetchBreeds: async function () {
+        try {
+            const response = await axios.get(`${this.url}/breeds`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     },
 
-    fetchCatByBreed: function (breedId) {
-        return fetch(`${this.url}/images/search?breed_ids=${breedId}`, { headers: { 'X-Api-Key': this.apiKey } })
-            .then(response => response.json());
+    fetchCatByBreed: async function (breedId) {
+        try {
+            const response = await axios.get(`${this.url}/images/search?breed_ids=${breedId}`);
+            return response.data;
+        } catch (error) {
+            throw error;
+        }
     }
 };
 

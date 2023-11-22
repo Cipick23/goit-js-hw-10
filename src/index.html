@@ -9,9 +9,9 @@
   <body>
     
     <select 
-    class="breed-select" 
-    onchange="fetchCatInfo(this.value)"
-    >
+      class="breed-select" 
+      onchange="onBreedSelectChange(this.selectedBreedId)"
+      >
     </select>
 
     <div id="loader" class="hidden">
