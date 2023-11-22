@@ -5,15 +5,18 @@ import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 document.addEventListener('DOMContentLoaded', () => {
   const breedSelect = document.querySelector('.breed-select');
   const loader = document.querySelector('.loader');
+  const spinner = document.querySelector('.load-spinner');
   const error = document.querySelector('.error');
   const catInfo = document.querySelector('.cat-info');
 
   loader.style.display = 'none';
+  spinner.style.display = 'none';
   error.style.display = 'none';
 
   fetchBreeds()
     .then(breeds => {
-      loader.style.display = 'none';
+        loader.style.display = 'none';
+        spinner.style.display = 'none';
       breeds.forEach(breed => {
         const option = document.createElement('option');
         option.value = breed.id;
@@ -22,7 +25,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     })
     .catch(error => {
-      loader.style.display = 'none';
+        loader.style.display = 'none';
+        spinner.style.display = 'none';
       error.style.display = 'block';
       console.error('Error fetching breeds:', error);
     });
@@ -31,7 +35,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const selectedBreedId = event.target.value;
 
     if (selectedBreedId) {
-      loader.style.display = 'block';
+    loader.style.display = 'block';
+    spinner.style.display = 'block';
       error.style.display = 'none';
       catInfo.style.display = 'none';
 
@@ -52,12 +57,14 @@ document.addEventListener('DOMContentLoaded', () => {
           catInfo.appendChild(catTemperament);
         })
         .catch(error => {
-          loader.style.display = 'none';
+            loader.style.display = 'none';
+            spinner.style.display = 'none';
           error.style.display = 'block';
           console.error('Error fetching cat information:', error);
         })
         .finally(() => {
-          loader.style.display = 'none';
+            loader.style.display = 'none';
+            spinner.style.display = 'none';
           catInfo.style.display = 'block';
         });
     }

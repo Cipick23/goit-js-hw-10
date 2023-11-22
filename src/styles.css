@@ -1,59 +1,76 @@
-
 body {
-    font-family: Arial, roboto;
+  font-family: 'Arial', 'Roboto';
+  background-color: lightgray;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.breed-select {
+  display: flex;
+  background-color: #616060;
+  margin: 15px;
+  padding: 5px;
+  width: 40%;
+}
+
+.breed-select:hover {
+  cursor: pointer;
+}
+
+.loader,
+.error {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+}
+
+.load-section {
+  margin: 15px;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+}
+
+.load-spinner {
+  margin: 15px;
+  padding: 5px;
+  width: 48px;
+  height: 48px;
+  border: 5px solid #FFF;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
   }
+
+  @keyframes rotation {
+  0% {
+      transform: rotate(0deg);
+  }
+  100% {
+      transform: rotate(360deg);
+  }
+}
+
+.loader {
+  color: #2a2828;
+}
+
+.error {
+  color: #b71f1f;
+}
+
+.cat-info {
+  display: flex;
+  max-width: 70%; /* Modificat pentru a lăsa mai mult spațiu pentru conținut */
+  margin: 20px;
+}
+
+.cat-info > img {
+  width: 50%; /* Ajustat pentru a face imaginea să ocupe jumătate din container */
+  height: auto; /* Adăugat pentru a menține proporțiile imaginii */
   
-  .breed-select {
-    margin: 15px;
-    padding: 5px;
-  }
-
-  .breed-select:hover {
-    cursor: pointer;
-  }
-  
-  .loader, .error {
-    margin: 10px 0;
-    padding: 10px;
-    background-color: #f0f0f0;
-    border: 1px solid #ddd;
-  }
-
-  .loader {
-    color: #2a2828;
-  }
-
-  .error {
-    color: #b71f1f;
-  }
-  
-  .cat-info {
-    margin-top: 20px;
-    padding: 10px;
-    background-color: #e0e0e0;
-    border: 1px solid #999090;
-    display: flex;
-    flex-direction: row;
-  }
-     
-  .loader > p {
-    width: 48px;
-    height: 48px;
-    border: 5px solid #FFF;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-    background-color: #999;
-    }
-
-    @keyframes rotation {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-    }
-
+}
