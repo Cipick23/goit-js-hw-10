@@ -2,6 +2,9 @@ import SlimSelect from 'slim-select';
 import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
+// new SlimSelect({select: '.breed-select'})
+
+
 document.addEventListener('DOMContentLoaded', () => {
   const breedSelect = document.querySelector('.breed-select');
   const loader = document.querySelector('.loader');
@@ -27,18 +30,18 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => {
         loader.style.display = 'none';
         spinner.style.display = 'none';
-      error.style.display = 'block';
-      console.error('Error fetching breeds:', error);
+        Notiflix.Notify.failure('block');
+        console.error('Error fetching breeds:', error);
     });
 
   breedSelect.addEventListener('change', event => {
     const selectedBreedId = event.target.value;
 
     if (selectedBreedId) {
-    loader.style.display = 'block';
-    spinner.style.display = 'block';
-      error.style.display = 'none';
-      catInfo.style.display = 'none';
+        loader.style.display = 'block';
+        spinner.style.display = 'block';
+        error.style.display = 'none';
+        catInfo.style.display = 'none';
 
       fetchCatByBreed(selectedBreedId)
         .then(catData => {
@@ -59,13 +62,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch(error => {
             loader.style.display = 'none';
             spinner.style.display = 'none';
-          error.style.display = 'block';
+            Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
           console.error('Error fetching cat information:', error);
         })
         .finally(() => {
             loader.style.display = 'none';
             spinner.style.display = 'none';
-          catInfo.style.display = 'block';
+            catInfo.style.display = 'block';
         });
     }
   });
