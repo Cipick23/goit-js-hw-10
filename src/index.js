@@ -2,11 +2,9 @@ import SlimSelect from 'slim-select';
 import Notiflix from 'notiflix';
 import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
-// new SlimSelect({select: '.breed-select'})
-
 
 document.addEventListener('DOMContentLoaded', () => {
-    // new SlimSelect({select: });
+//   new SlimSelect({select: '.breed-select'});
   const breedSelect = document.querySelector('.breed-select');
   const loader = document.querySelector('.loader');
   const spinner = document.querySelector('.load-spinner');
@@ -35,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Error fetching breeds:', error);
     });
 
-  breedSelect.addEventListener('change', event => {
+    breedSelect.addEventListener('change', event => {
     const selectedBreedId = event.target.value;
 
     if (selectedBreedId) {
