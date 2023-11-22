@@ -6,6 +6,7 @@ import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
+    // new SlimSelect({select: });
   const breedSelect = document.querySelector('.breed-select');
   const loader = document.querySelector('.loader');
   const spinner = document.querySelector('.load-spinner');
@@ -30,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
     .catch(error => {
         loader.style.display = 'none';
         spinner.style.display = 'none';
-        Notiflix.Notify.failure('block');
+        Notiflix.Notify.failure('Oops! Something went wrong! Try reloading the page!');
         console.error('Error fetching breeds:', error);
     });
 
