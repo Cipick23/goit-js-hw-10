@@ -1,29 +1,27 @@
 import axios from "axios";
+import Notiflix from 'notiflix';
 
-const apiKey = "live_aOIYhgyqCw9ZFXBbhPIXGxyWuikffXYH7HXlX7deKSKNH9tpn2JJ0aYEdQi8K65r"; // Înlocuiește "cheia ta" cu cheia ta API
+axios.defaults.headers.common["x-api-key"] = 
+"live_aOIYhgyqCw9ZFXBbhPIXGxyWuikffXYH7HXlX7deKSKNH9tpn2JJ0aYEdQi8K65r";
 
-axios.defaults.headers.common["x-api-key"] = apiKey;
-
-const CatApi = {
-    url: "https://api.thecatapi.com/v1",
-
-    fetchBreeds: async function () {
-        try {
-            const response = await axios.get(`${this.url}/breeds`);
+export const fetchBreeds = () => {
+    return axios
+        .get(`https://api.thecatapi.com/v1/breeds`)
+        .then(response => {
             return response.data;
-        } catch (error) {
-            throw error;
-        }
-    },
-
-    fetchCatByBreed: async function (breedId) {
-        try {
-            const response = await axios.get(`${this.url}/images/search?breed_ids=${breedId}`);
-            return response.data;
-        } catch (error) {
-            throw error;
-        }
-    }
+        })
+        .catch(error => {
+        throw error;
+    });
 };
 
-export { CatApi };
+export const fetchCatByBreed = breedId => {
+    return axios
+        .get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`)
+        .then(response => {
+            return response.data[0];
+        })
+        .catch(error => {
+        throw error;
+    })
+};
