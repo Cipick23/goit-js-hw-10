@@ -4,12 +4,13 @@ import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-//   new SlimSelect({select: '.breed-select'});
-  const breedSelect = document.querySelector('.breed-select');
-  const loader = document.querySelector('.loader');
-  const spinner = document.querySelector('.load-spinner');
-  const error = document.querySelector('.error');
-  const catInfo = document.querySelector('.cat-info');
+    
+    
+    let breedSelect = document.querySelector('#breed-select');
+    const loader = document.querySelector('.loader');
+    const spinner = document.querySelector('.load-spinner');
+    const error = document.querySelector('.error');
+    const catInfo = document.querySelector('.cat-info');
 
   loader.style.display = 'none';
   spinner.style.display = 'none';
@@ -19,11 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(breeds => {
         loader.style.display = 'none';
         spinner.style.display = 'none';
+        
+        
       breeds.forEach(breed => {
+        
         const option = document.createElement('option');
         option.value = breed.id;
         option.text = breed.name;
         breedSelect.appendChild(option);
+        // new SlimSelect({
+        //     select: '#breed-select'
+        // });
       });
     })
     .catch(error => {
@@ -46,6 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(catData => {
           const catImage = document.createElement('img');
           catImage.src = catData.url;
+        catImage.style.width = '50%';
+        catImage.style.height = 'auto';
+        catImage.style.marginRight = '20px';
           catInfo.innerHTML = '';
           catInfo.appendChild(catImage);
           const catName = document.createElement('p');

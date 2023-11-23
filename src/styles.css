@@ -1,3 +1,7 @@
+:root {
+  --font-family: 'Roboto';
+}
+
 body {
   font-family: 'Arial', 'Roboto';
   background-color: lightgray;
@@ -6,15 +10,14 @@ body {
   flex-direction: column;
 }
 
-.breed-select {
-  display: flex;
-  background-color: #616060;
+#breed-select {
+  background-color:#938d8d;;
   margin: 15px;
   padding: 5px;
-  width: 40%;
+  width: 35%;
 }
 
-.breed-select:hover {
+#breed-select:hover {
   cursor: pointer;
 }
 
@@ -23,12 +26,11 @@ body {
   margin: 10px 0;
   padding: 10px;
   background-color: transparent;
-  border: 1px solid #ddd;
 }
 
 .loader {
   display: flex;
-  border: none;
+  color: #2a2828;
 }
 
 .load-section {
@@ -49,19 +51,15 @@ body {
   display: inline-block;
   box-sizing: border-box;
   animation: rotation 1s linear infinite;
-  }
-
-  @keyframes rotation {
-  0% {
-      transform: rotate(0deg);
-  }
-  100% {
-      transform: rotate(360deg);
-  }
 }
 
-.loader {
-  color: #2a2828;
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .error {
@@ -70,12 +68,13 @@ body {
 
 .cat-info {
   display: flex;
-  max-width: 70%; /* Modificat pentru a lăsa mai mult spațiu pentru conținut */
-  margin: 20px;
+  align-items: center; /* Asează elementele pe axa verticală (imediat după încărcarea imaginii) */
 }
 
-.cat-info > img {
-  width: 50%; /* Ajustat pentru a face imaginea să ocupe jumătate din container */
-  height: auto; /* Adăugat pentru a menține proporțiile imaginii */
-  
+.cat-info img {
+  flex-shrink: 0; /* Nu lăsa imaginea să se micsoreze */
+  width: 50%;
+  height: auto;
+  margin-right: 20px; /* Spațiu între imagine și text */
 }
+
