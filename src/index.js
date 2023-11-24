@@ -53,9 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(catData => {
           const catImage = document.createElement('img');
           catImage.src = catData.url;
-        catImage.style.width = '50%';
-        catImage.style.height = 'auto';
-        catImage.style.marginRight = '20px';
+          catImage.style.width = '50%';
+          catImage.style.height = 'auto';
+          catImage.style.marginRight = '20px';
           catInfo.innerHTML = '';
           catInfo.appendChild(catImage);
           const catName = document.createElement('p');
@@ -67,7 +67,9 @@ document.addEventListener('DOMContentLoaded', () => {
           const catTemperament = document.createElement('p');
           catTemperament.textContent = catData.breeds[0].temperament;
           catInfo.appendChild(catTemperament);
-          catName.style
+          catName.style.fontSize = '16px';
+          catName.style.fontStyle = 'bold';
+          catName.style.fontWeight = '700';
         })
         .catch(error => {
             loader.style.display = 'none';
