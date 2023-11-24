@@ -4,8 +4,6 @@ import { fetchBreeds, fetchCatByBreed } from './cat-api.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    
-    
     let breedSelect = document.querySelector('#breed-select');
     const loader = document.querySelector('.loader');
     const spinner = document.querySelector('.load-spinner');
@@ -20,17 +18,19 @@ document.addEventListener('DOMContentLoaded', () => {
     .then(breeds => {
         loader.style.display = 'none';
         spinner.style.display = 'none';
-        
-        
+        new SlimSelect({
+          breedSelect: '#breed-select',
+          settings: {
+            alwaysOpen: false,
+            placeholderText: 'Select Breed',
+            openPosition: 'down'
+          }
+        });  
       breeds.forEach(breed => {
-        
         const option = document.createElement('option');
         option.value = breed.id;
         option.text = breed.name;
         breedSelect.appendChild(option);
-        // new SlimSelect({
-        //     select: '#breed-select'
-        // });
       });
     })
     .catch(error => {
@@ -67,6 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const catTemperament = document.createElement('p');
           catTemperament.textContent = catData.breeds[0].temperament;
           catInfo.appendChild(catTemperament);
+          catName.style
         })
         .catch(error => {
             loader.style.display = 'none';
